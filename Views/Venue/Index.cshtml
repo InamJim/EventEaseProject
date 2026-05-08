@@ -1,0 +1,41 @@
+@model IEnumerable<EventEase.Models.Venue>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-3">Venues</h2>
+
+<a class="btn btn-primary mb-4" href="/Venue/Create">+ Add Venue</a>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<div class="row g-3">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card shadow border-0">
+
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@item.ImageUrl" class="card-img-top" style="height:180px; object-fit:cover;" />
+                }
+
+                <div class="card-body">
+                    <h5>@item.VenueName</h5>
+                    <p class="text-muted">@item.Location</p>
+                    <p>Capacity: @item.Capacity</p>
+
+                    <a href="/Venue/Edit/@item.VenueId" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="/Venue/Delete/@item.VenueId" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+
+            </div>
+        </div>
+    }
+
+</div>

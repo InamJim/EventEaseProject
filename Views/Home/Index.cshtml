@@ -1,0 +1,57 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center mb-5">
+    <h1 class="fw-bold">EventEase Admin Dashboard</h1>
+    <p class="text-muted">System Overview & Management Hub</p>
+</div>
+
+<div class="row g-4">
+
+    <div class="col-md-4">
+        <div class="card shadow border-0 text-center p-3">
+            <h2 class="text-primary">@ViewBag.TotalVenues</h2>
+            <p class="mb-0">Venues</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow border-0 text-center p-3">
+            <h2 class="text-success">@ViewBag.TotalEvents</h2>
+            <p class="mb-0">Events</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow border-0 text-center p-3">
+            <h2 class="text-dark">@ViewBag.TotalBookings</h2>
+            <p class="mb-0">Bookings</p>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-5" />
+
+<div class="row g-3 text-center">
+
+    <div class="col-md-4">
+        <a href="/Venue" class="btn btn-outline-primary w-100 py-3">
+            Manage Venues
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="/Event" class="btn btn-outline-success w-100 py-3">
+            Manage Events
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a href="/Booking" class="btn btn-outline-dark w-100 py-3">
+            Manage Bookings
+        </a>
+    </div>
+
+</div>

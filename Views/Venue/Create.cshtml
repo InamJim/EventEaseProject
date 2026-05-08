@@ -1,0 +1,31 @@
+@model EventEase.Models.Venue
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Venue</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label>Name</label>
+        <input asp-for="VenueName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Venue Image</label>
+        <input type="file" name="imageFile" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Location</label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Capacity</label>
+        <input asp-for="Capacity" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>

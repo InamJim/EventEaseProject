@@ -1,0 +1,92 @@
+@using EventEase.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var events = ViewBag.Events as List<Event> ?? new List<Event>();
+    var venues = ViewBag.Venues as List<Venue> ?? new List<Venue>();
+}
+@model IEnumerable<EventEase.Models.Booking>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Bookings</h2>
+
+<a class="btn btn-primary mb-3" href="/Booking/Create">
+    Create Booking
+</a>
+
+<!-- SEARCH BAR -->
+<form method="get" action="/Booking/Search" class="mb-3">
+    <div class="input-group">
+
+        <input type="text"
+               name="keyword"
+               class="form-control"
+               placeholder="Search bookings..." />
+
+        <button class="btn btn-primary" type="submit">
+            Search
+        </button>
+
+    </div>
+</form>
+
+<!-- ERROR ALERT -->
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="table-responsive shadow-sm">
+
+    <table class="table table-hover align-middle">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Reference</th>
+            <th>Event ID</th>
+            <th>Venue ID</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.BookingReferenceNumber</td>
+
+                <td>
+                    @events.FirstOrDefault(e => e.EventId == item.EventId)?.EventName
+                </td>
+
+                <td>
+                    @venues.FirstOrDefault(v => v.VenueId == item.VenueId)?.VenueName
+                </td>
+
+                <td>@item.BookingDate.ToShortDateString()</td>
+                    <td>
+                        <span class="badge bg-secondary">
+                            @item.BookingStatus
+                        </span>
+                    </td>
+
+                <td>
+                    <a class="btn btn-danger btn-sm"
+                           href="/Booking/Delete/@item.BookingId">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+</div>

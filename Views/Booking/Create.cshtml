@@ -1,0 +1,65 @@
+@model EventEase.Models.Booking
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Booking</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<form method="post">
+
+    <div class="mb-3">
+        <label>Booking Reference</label>
+        <input asp-for="BookingReferenceNumber" class="form-control" />
+    </div>
+
+    <!-- EVENT DROPDOWN -->
+    <div class="mb-3">
+        <label>Select Event</label>
+        <select asp-for="EventId" class="form-control">
+            <option value="">-- Select Event --</option>
+            @foreach (var ev in ViewBag.Events)
+            {
+                <option value="@ev.EventId">@ev.EventName</option>
+            }
+        </select>
+    </div>
+
+    <!-- VENUE DROPDOWN -->
+    <div class="mb-3">
+        <label>Select Venue</label>
+        <select asp-for="VenueId" class="form-control">
+            <option value="">-- Select Venue --</option>
+            @foreach (var v in ViewBag.Venues)
+            {
+                <option value="@v.VenueId">@v.VenueName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Booking Date</label>
+        <input asp-for="BookingDate" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Status</label>
+        <input asp-for="BookingStatus" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Notes</label>
+        <textarea asp-for="Notes" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Save Booking
+    </button>
+</form>
