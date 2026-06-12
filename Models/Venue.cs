@@ -8,5 +8,8 @@ namespace EventEase.Models
         public int Capacity { get; set; }
         public string? ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public bool Availability { get; set; } = true;
+        public ICollection<Event> Events { get; set; }
+        = new List<Event>();
     }
 }

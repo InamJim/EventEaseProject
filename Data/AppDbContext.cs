@@ -12,6 +12,7 @@ namespace EventEase.Data
 
         public DbSet<Venue> Venues { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<EventType> EventType { get; set; }
         public DbSet<Booking> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,13 +23,16 @@ namespace EventEase.Data
                 .HasKey(v => v.VenueId);
 
             modelBuilder.Entity<Event>()
-                .HasKey(e => e.EventId);
-
-            modelBuilder.Entity<Event>()
-                .HasOne<Venue>()
-                .WithMany()
+                .HasOne(e => e.Venue)
+                .WithMany(v => v.Events)
                 .HasForeignKey(e => e.VenueId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Event>()
+                .HasOne(e => e.EventType)
+                .WithMany(et => et.Events)
+                .HasForeignKey(e => e.EventTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Booking>()
                 .HasKey(b => b.BookingId);
@@ -44,6 +48,35 @@ namespace EventEase.Data
                 .WithMany()
                 .HasForeignKey(b => b.VenueId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EventType>().HasData(
+                new EventType
+                {
+                    EventTypeId = 1,
+                    Name = "Conference"
+                },
+
+                new EventType
+                {
+                    EventTypeId = 2,
+                    Name = "Wedding"
+                },
+                new EventType
+                {
+                    EventTypeId = 3,
+                    Name = "Concert"
+                },
+                new EventType
+                {
+                    EventTypeId = 4,
+                    Name = "Corporate Meeting"
+                },
+                new EventType
+                {
+                    EventTypeId = 5,
+                    Name = "Exhibition"
+                }
+                );
         }
     }
 }

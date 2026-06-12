@@ -1,42 +1,130 @@
-@model IEnumerable<EventEase.Models.Event>
-
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@model EventEase.ViewModels.EventFilterViewModel
 
 <h2>Events</h2>
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["Error"]
-    </div>
-}
+<form method="get">
 
-<a class="btn btn-primary mb-3" href="/Event/Create">Add Event</a>
+    <div class="row mb-3">
+
+        <div class="col-md-3">
+
+            <label>Event Type</label>
+
+            <select name="eventTypeId"
+                    class="form-control">
+
+                <option value="">
+                    All
+                </option>
+
+                @foreach ( var type in Model.EventTypes )
+                {
+                    <option value="@type.EventTypeId">
+                        @type.Name
+                    </option>
+                }
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2">
+
+            <label>Available</label>
+
+            <select name="availability"
+                    class="form-control">
+
+                <option value="">
+                    All
+                </option>
+
+                <option value="true">
+                    Available
+                </option>
+
+                <option value="false">
+                    Unavailable
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2">
+
+            <label>Start Date</label>
+
+            <input type="date"
+                   name="startDate"
+                   class="form-control" />
+
+        </div>
+
+        <div class="col-md-2">
+
+            <label>End Date</label>
+
+            <input type="date"
+                   name="endDate"
+                   class="form-control" />
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button type="submit"
+                    class="btn btn-primary mt-4">
+                Search
+            </button>
+
+        </div>
+
+    </div>
+
+</form>
 
 <table class="table table-bordered">
+
     <thead>
+
         <tr>
             <th>Name</th>
+            <th>Type</th>
             <th>Date</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th>Venue</th>
+            <th>Available</th>
         </tr>
+
     </thead>
 
     <tbody>
-        @foreach (var item in Model)
+
+        @foreach ( var item in Model.Events )
         {
             <tr>
+
                 <td>@item.EventName</td>
-                <td>@item.EventDate.ToShortDateString()</td>
-                <td>@item.Description</td>
+
+                <td>@item.EventType?.Name</td>
+
                 <td>
-                    <a class="btn btn-warning btn-sm" href="/Event/Edit/@item.EventId">Edit</a>
-                    <a class="btn btn-danger btn-sm" href="/Event/Delete/@item.EventId">Delete</a>
+                    @item.EventDate.ToShortDateString()
                 </td>
+
+                <td>
+                    @item.Venue?.VenueName
+                </td>
+
+                <td>
+                    @(item.Venue?.Availability == true
+                        ? "Yes"
+                        : "No")
+                </td>
+
             </tr>
         }
+
     </tbody>
+
 </table>
